@@ -7,18 +7,18 @@ class EstudiantesController {
         const { dni, nombre, apellido, email } = req.body;
         const errores: { [key: string]: string } = {};
     
-        // Validar DNI
+       
         if (!dni || !/^\d{8}$/.test(dni)) {
             errores.dni = 'El DNI debe contener exactamente 8 dígitos numéricos.';
         } else {
-            // Verificar si el DNI ya existe en la base de datos
+            
             const estudianteExistente = await Estudiante.findOneBy({ dni });
             if (estudianteExistente) {
                 errores.dni = 'El DNI ya está registrado para otro estudiante.';
             }
         }
     
-        // Validar Nombre
+       
         if (!nombre) {
             errores.nombre = 'El nombre es obligatorio.';
         } else {
@@ -30,7 +30,7 @@ class EstudiantesController {
             }
         }
     
-        // Validar Apellido
+       
         if (!apellido) {
             errores.apellido = 'El apellido es obligatorio.';
         } else {
@@ -42,7 +42,7 @@ class EstudiantesController {
             }
         }
     
-        // Validar Email
+        
         if (!email || !/^[^\s@]+@[^\s@]+\.[a-zA-Z]{2,}$/.test(email)) {
             errores.email = 'Debe ser un correo electrónico válido.';
         }
@@ -69,17 +69,44 @@ class EstudiantesController {
     
         // Validar DNI
         if (!dni || !/^\d{8}$/.test(dni)) {
-            errores.dni = 'El DNI debe contener exactamente 8 dígitos numéricos.';
+            errores.dni = 'El DNI debe contener exactamente 8 dígitos numericos';
         } else {
-            // Verificar si el DNI ya está registrado en otro estudiante
+           
             const estudianteExistente = await Estudiante.findOneBy({ dni });
             if (estudianteExistente && estudianteExistente.id !== Number(id)) {
-                errores.dni = 'El DNI ya está registrado para otro estudiante.';
+                errores.dni = 'El DNI ya está registrado para otro estudiante';
+            }
+        }
+
+        if (!nombre) {
+            errores.nombre = 'El nombre es obligatorio';
+        } else {
+            if (nombre.length < 3) {
+                errores.nombre = 'El nombre debe tener al menos 3 letras';
+            }
+            if (!/^[A-Za-z]+$/.test(nombre)) {
+                errores.nombre = 'El nombre solo puede contener letras';
             }
         }
     
-        // Validar el resto de campos de la misma forma...
-        // ...
+       
+        if (!apellido) {
+            errores.apellido = 'El apellido es obligatorio.';
+        } else {
+            if (apellido.length < 3) {
+                errores.apellido = 'El apellido debe tener al menos 3 letras.';
+            }
+            if (!/^[A-Za-z]+$/.test(apellido)) {
+                errores.apellido = 'El apellido solo puede contener letras.';
+            }
+        }
+    
+        
+        if (!email || !/^[^\s@]+@[^\s@]+\.[a-zA-Z]{2,}$/.test(email)) {
+            errores.email = 'Debe ser un correo electronico valido.';
+        }
+    
+        
     
         if (Object.keys(errores).length > 0) {
             const estudiante = await Estudiante.findOneBy({ id: Number(id) });

@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Listar Inscripciones</title>
     <link rel="stylesheet" href="/css/estilo.css">
-    <link rel="stylesheet" href="/css/insertar.css">
+    <link rel="shortcut icon" href="/imagenes/img1.jpg">
 </head>
 
 <body>
@@ -47,7 +47,7 @@
                         <td>
                             <a id="editar" href="/inscripciones/editar/<%= inscripcion.curso_id %>/<%= inscripcion.estudiante_id %>">Editar</a>
                             <a id="eliminar" href="#"
-                                onclick="if (confirm('¿Está seguro de que desea eliminar esta inscripción?')) { document.getElementById('delete-form-<%= inscripcion.curso_id %>-<%= inscripcion.estudiante_id %>').submit(); } return false;">
+                                onclick="if (confirm('¿Esta seguro de que desea eliminar esta inscripcion?')) { document.getElementById('delete-form-<%= inscripcion.curso_id %>-<%= inscripcion.estudiante_id %>').submit(); } return false;">
                                 Eliminar
                             </a>
                             <form id="delete-form-<%= inscripcion.curso_id %>-<%= inscripcion.estudiante_id %>" action="/inscripciones/eliminar/<%= inscripcion.curso_id %>/<%= inscripcion.estudiante_id %>" method="POST" style="display:none;">

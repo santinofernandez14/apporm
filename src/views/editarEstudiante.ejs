@@ -7,6 +7,7 @@
     <title>Modificar Estudiante</title>
     <link rel="stylesheet" href="/css/insertar.css">
     <link rel="stylesheet" href="/css/estilo.css">
+    <link rel="shortcut icon" href="/imagenes/img1.jpg">
 </head>
 
 <body>
@@ -22,7 +23,7 @@
         </nav>
     </header>
 
-    <!-- Enlace Agregar Estudiante, fuera del header -->
+   
     <div id="agregar-container">
         <a id="agregar" href="/estudiantes/insertar">Agregar Estudiante</a>
     </div>
@@ -30,7 +31,7 @@
         <h1>Modificar Estudiante</h1>
     </div>
 
-    <!-- Mostrar errores si existen -->
+    
     <% if (typeof errores !== 'undefined' && Object.keys(errores).length > 0) { %>
         <div class="error-msg">
             <ul>

@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Listar Cursos</title>
     <link rel="stylesheet" href="/css/estilo.css">
-    <link rel="stylesheet" href="/css/insertar.css">
+    <link rel="shortcut icon" href="/imagenes/img1.jpg">
 </head>
 
 <body>
@@ -22,7 +22,7 @@
         </nav>
     </header>
 
-    <!-- Enlace Agregar Estudiante, fuera del header -->
+   
     <div id="agregar-container">
         <a id="agregar" href="/cursos/insertar">Agregar Curso</a>
     </div>
@@ -59,7 +59,7 @@
                         <td>
                             <a id="editar" href="/cursos/editar/<%= curso.id %>">Editar</a>
                             <a id="eliminar" href="/cursos/eliminar/<%= curso.id %>"
-                                onclick="return confirm('¿Está seguro de que desea eliminar este curso?')">Eliminar</a>
+                                onclick="return confirm('¿Esta seguro de que desea eliminar este curso?')">Eliminar</a>
                         </td>
                     </tr>
                     <% }) %>
