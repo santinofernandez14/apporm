@@ -1,16 +1,24 @@
-import  express  from "express";
+import express from 'express';
+import estudiantesController from '../controllers/estudiantesController';
 
-const router=express.Router();
-import  estudianteController from "../controllers/estudiantesController";
-router.get('/',estudianteController.consultar);
-router.post('/',estudianteController.insertar);
-router.put('/',estudianteController.modificar);
-router.delete('/',estudianteController.borrar)
+const router = express.Router();
 
-router.route('/:id')
-.put(estudianteController.modificar)
-.delete(estudianteController.borrar)
-.get(estudianteController.consultarUno)
+// Ruta para mostrar el formulario de insertar
+router.get('/insertar', (req, res) => {
+    res.render('insertarEstudiante'); // Renderiza la vista de insertar
+});
 
+// Ruta para insertar
+router.post('/insertar', estudiantesController.insertar);
+
+// Ruta para listar todos los estudiantes
+router.get('/listar', estudiantesController.listar);
+
+router.get('/editar/:id', estudiantesController.editar);
+
+// Ruta para modificar un estudiante (PUT)
+router.put('/modificar', estudiantesController.modificar);
+// Ruta para eliminar un estudiante
+router.get('/eliminar/:id', estudiantesController.eliminar);
 
 export default router;

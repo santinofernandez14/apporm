@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Listar Cursos</title>
+    <link rel="stylesheet" href="/css/estilo.css">
+    <link rel="stylesheet" href="/css/insertar.css">
+</head>
+
+<body>
+    <header>
+        <nav>
+            <a href="/">Proyecto universidad</a>
+            <div>
+                <a href="/estudiantes/listar">Listar estudiantes</a>
+                <a href="/profesores/listar">Listar profesores</a>
+                <a href="/cursos/listar">Listar cursos</a>
+                <a href="/inscripciones/listar">Listar inscripciones</a>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Enlace Agregar Estudiante, fuera del header -->
+    <div id="agregar-container">
+        <a id="agregar" href="/cursos/insertar">Agregar Curso</a>
+    </div>
+
+    <div id="content">
+        <h1>Proyecto universidad</h1>
+        <h3>Lista de Cursos</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Nombre</th>
+                    <th>Descripción</th>
+                    <th>Profesor_id</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% cursos.forEach(curso=> { %>
+                    <tr>
+                        <td>
+                            <%= curso.id %>
+                        </td>
+                        <td>
+                            <%= curso.nombre %>
+                        </td>
+                        <td>
+                            <%= curso.descripcion %>
+                        </td>
+                        <td>
+                            <%= curso.profesor.id %>
+                               
+                        </td>
+                        <td>
+                            <a id="editar" href="/cursos/editar/<%= curso.id %>">Editar</a>
+                            <a id="eliminar" href="/cursos/eliminar/<%= curso.id %>"
+                                onclick="return confirm('¿Está seguro de que desea eliminar este curso?')">Eliminar</a>
+                        </td>
+                    </tr>
+                    <% }) %>
+            </tbody>
+        </table>
+    </div>
+</body>
+
+</html>

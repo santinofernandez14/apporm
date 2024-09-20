@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Editar Curso</title>
+    <link rel="stylesheet" href="/css/estilo.css">
+    <link rel="stylesheet" href="/css/insertar.css">
+</head>
+
+<body>
+    <header>
+        <nav>
+            <a href="/">Proyecto universidad</a>
+            <div>
+                <a href="/estudiantes/listar">Listar estudiantes</a>
+                <a href="/profesores/listar">Listar profesores</a>
+                <a href="/cursos/listar">Listar cursos</a>
+                <a href="/inscripciones/listar">Listar inscripciones</a>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Enlace Agregar Estudiante, fuera del header -->
+    <div id="agregar-container">
+        <a id="agregar" href="/cursos/insertar">Agregar Curso</a>
+    </div>
+    <div id="content">
+        <h1>Modificar Curso</h1>
+    </div>
+
+    <% if (typeof errores !== 'undefined' && Object.keys(errores).length > 0) { %>
+        <div class="error-msg">
+            <ul>
+                <% Object.values(errores).forEach(function(error) { %>
+                    <li><%= error %></li>
+                <% }); %>
+            </ul>
+        </div>
+    <% } %>
+
+    <form action="/cursos/editar/<%= curso.id %>?_method=PUT" method="POST">
+        <label for="nombre">Nombre:</label>
+        <input type="text" name="nombre" value="<%= curso.nombre %>">
+    
+        <label for="descripcion">Descripción:</label>
+        <input type="text" name="descripcion" value="<%= curso.descripcion %>">
+    
+        <label for="profesor_id">Profesor (ID):</label>
+        <input type="text" name="profesor_id" value="<%= typeof profesorId !== 'undefined' ? profesorId : (curso.profesor ? curso.profesor.id : '') %>">
+        
+        <button type="submit">Modificar Curso</button>
+    </form>
+    
+</body>
+
+</html>

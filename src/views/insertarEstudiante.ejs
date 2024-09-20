@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Insertar Estudiante</title>
+    <link rel="stylesheet" href="/css/insertar.css">
+    <link rel="stylesheet" href="/css/estilo.css">
+</head>
+
+<body>
+    <header>
+        <nav>
+            <a href="/">Proyecto universidad</a>
+            <div>
+                <a href="/estudiantes/listar">Listar estudiantes</a>
+                <a href="/profesores/listar">Listar profesores</a>
+                <a href="/cursos/listar">Listar cursos</a>
+                <a href="/inscripciones/listar">Listar inscripciones</a>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Enlace Agregar Estudiante, fuera del header -->
+    <div id="agregar-container">
+        <a id="agregar" href="/estudiantes/insertar">Agregar Estudiante</a>
+    </div>
+    <div id="content">
+        <h1>Insertar Estudiante</h1>
+    </div>
+
+
+    <!-- Mostrar errores si existen -->
+    <% if (typeof errores !== 'undefined' && Object.keys(errores).length > 0) { %>
+        <div class="error-msg">
+            <ul>
+                <% Object.keys(errores).forEach(function(key) { %>
+                    <li><%= errores[key] %></li>
+                <% }); %>
+            </ul>
+        </div>
+    <% } %>
+
+    <form id="crearEstudianteForm" method="POST" action="/estudiantes/insertar">
+        <label for="dni">DNI:</label>
+        <input type="text" id="dni" name="dni" placeholder="DNI" value="<%= typeof dni !== 'undefined' ? dni : '' %>">
+       
+        <label for="nombre">Nombre:</label>
+        <input type="text" id="nombre" name="nombre" placeholder="Nombre" value="<%= typeof nombre !== 'undefined' ? nombre : '' %>">
+       
+
+        <label for="apellido">Apellido:</label>
+        <input type="text" id="apellido" name="apellido" placeholder="Apellido" value="<%= typeof apellido !== 'undefined' ? apellido : '' %>">
+       
+
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email" placeholder="Email" value="<%= typeof email !== 'undefined' ? email : '' %>">
+       
+
+        <button type="submit">Insertar estudiante</button>
+    </form>
+
+    
+</body>
+
+</html>

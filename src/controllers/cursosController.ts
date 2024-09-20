@@ -1,115 +1,143 @@
 import { Request, Response } from "express";
 import { Curso } from "../models/cursoModel";
 import { Profesor } from "../models/profesorModel";
-import { Estudiante } from "../models/estudianteModel";
-
 
 class CursosController {
-    constructor() {
 
-    }
-
-    async consultar(req: Request, res: Response) {
-        try {
-            const cursos = await Curso.find();
-            res.status(200).json(cursos);
-        } catch (err) {
-            if (err instanceof Error) {
-                res.status(500).send(err.message);
-            }
-        }
-    }
-    
-    
-
-    async consultarUno(req: Request, res: Response) {
-        const { id } = req.params;
-        try {
-            const curso = await Curso.findOneBy({ id: Number(id) });
-    
-            if (!curso) {
-                return res.status(404).json({ mensaje: 'Curso no encontrado' });
-            }
-    
-            res.status(200).json(curso);
-        } catch (err) {
-            if (err instanceof Error) {
-                res.status(500).send(err.message);
-            }
-        }
-    }
-    
-
+    // Método para insertar curso
     async insertar(req: Request, res: Response) {
-        try {
-            const { profesor } = req.body;
+        const { nombre, descripcion, profesor_id } = req.body;
+        const errores: { nombre?: string, descripcion?: string, profesor_id?: string } = {};
 
-            const profesorRegistro = await Profesor.findOneBy({ id: Number(profesor) });
-            if (!profesorRegistro) {
-                throw new Error('Profesor no encontrado');
+        // Validar Nombre
+        if (!nombre) {
+            errores.nombre = 'El nombre es obligatorio.';
+        } else {
+            if (nombre.length < 3 || nombre.length > 50) {
+                errores.nombre = 'El nombre debe tener entre 3 y 50 caracteres.';
             }
-
-            const registro = await Curso.save(req.body);
-            res.status(201).json(registro);
-        } catch (err) {
-            if (err instanceof Error)
-                res.status(500).send(err.message);
+            if (!/^[A-Za-z]+$/.test(nombre)) {
+                errores.nombre = 'El nombre solo puede contener letras.';
+            }
         }
-    }
-    
 
-    async modificar(req: Request, res: Response) {
-        const { id } = req.params;  
-        const { nombre, descripcion, profesor_id } = req.body;  
-    
+        // Validar Descripción
+        if (!descripcion) {
+            errores.descripcion = 'La descripción es obligatoria.';
+        } else {
+            if (descripcion.length < 3 || descripcion.length > 50) {
+                errores.descripcion = 'La descripción debe tener entre 3 y 50 caracteres.';
+            }
+        }
+
+        // Validar Profesor ID
+        let profesor;
+        if (!profesor_id || isNaN(Number(profesor_id))) {
+            errores.profesor_id = 'El ID del profesor debe ser un número válido.';
+        } else {
+            profesor = await Profesor.findOneBy({ id: Number(profesor_id) });
+            if (!profesor) {
+                errores.profesor_id = 'Profesor no encontrado.';
+            }
+        }
+
+        if (Object.keys(errores).length > 0) {
+            return res.render('insertarCurso', { errores, nombre, descripcion, profesor_id });
+        }
+        
+
         try {
-           
-            const curso = await Curso.findOneBy({ id: Number(id) });
-    
-            if (!curso) {
-                return res.status(404).json({ mensaje: 'Curso no encontrado' });
-            }
-    
-           
-            if (profesor_id) {
-                const profesor = await Profesor.findOneBy({ id: Number(profesor_id) });
-                if (!profesor) {
-                    return res.status(404).json({ mensaje: 'Profesor no encontrado' });
-                }
-                curso.profesor = profesor;  
-            }
-    
-           
-            if (nombre) curso.nombre = nombre;
-            if (descripcion) curso.descripcion = descripcion;
-    
-            
+            const curso = Curso.create({ 
+                nombre, 
+                descripcion, 
+                profesor: profesor || undefined  // Asignar el profesor solo si existe
+            });
             await Curso.save(curso);
-    
-            res.status(200).json({ mensaje: 'Curso modificado exitosamente', curso });
+            res.redirect('/cursos/listar');
         } catch (err) {
             if (err instanceof Error) {
                 res.status(500).send(err.message);
             }
         }
     }
-    
 
-   
-    async borrar(req: Request, res: Response) {
+    // Método para listar cursos
+    async listar(req: Request, res: Response) {
+        try {
+            const cursos = await Curso.find({ relations: ['profesor'] });
+            res.render('listarCursos', { cursos });
+        } catch (err) {
+            if (err instanceof Error) {
+                res.status(500).send(err.message);
+            }
+        }
+    }
+
+    
+    async editar(req: Request, res: Response) {
         const { id } = req.params;
         try {
-           
-            const registro = await Curso.findOneBy({ id: Number(id) });
-            if (!registro) {
-                return res.status(404).json({ message: 'Curso no encontrado' });
+            const curso = await Curso.findOne({
+                where: { id: Number(id) },
+                relations: ['profesor']  // Incluye la relación con Profesor
+            });
+            if (!curso) {
+                return res.status(404).send('Curso no encontrado');
             }
     
-         
-            await Curso.delete({ id: Number(id) });
-    
-          
-            res.status(200).json({ mensaje: 'Curso eliminado exitosamente' }); 
+            // Aquí se obtiene el id del profesor asociado al curso, si existe
+            const profesorId = curso.profesor ? curso.profesor.id : '';
+            res.render('editarCurso', { curso, profesorId });
+        } catch (err) {
+            if (err instanceof Error) {
+                res.status(500).send(err.message);
+            }
+        }
+    }
+
+    // Método para modificar curso
+    async modificar(req: Request, res: Response) {
+        const { id } = req.params;
+        const { nombre, descripcion, profesor_id } = req.body;
+        const errores: { nombre?: string, descripcion?: string, profesor_id?: string } = {};
+
+        // Validaciones
+        if (!nombre) {
+            errores.nombre = 'El nombre es obligatorio';
+        } else {
+            if (nombre.length < 3 || nombre.length > 50) {
+                errores.nombre = 'El nombre debe tener entre 3 y 50 caracteres';
+            }
+            if (!/^[A-Za-z\s]+$/.test(nombre)) {
+                errores.nombre = 'El nombre solo puede contener letras';
+            }
+        }
+
+        if (!descripcion) {
+            errores.descripcion = 'La descripción es obligatoria';
+        } else {
+            if (descripcion.length < 3) {
+                errores.descripcion = 'La descripción debe tener al menos 3 caracteres';
+            }
+        }
+
+        if (!profesor_id || isNaN(Number(profesor_id))) {
+            errores.profesor_id = 'El ID del profesor debe ser un número válido';
+        } else {
+            const profesor = await Profesor.findOneBy({ id: Number(profesor_id) });
+            if (!profesor) {
+                errores.profesor_id = 'Profesor no encontrado';
+            }
+        }
+
+        if (Object.keys(errores).length > 0) {
+            const curso = await Curso.findOneBy({ id: Number(id) });
+            return res.render('editarCurso', { errores, curso, profesorId: profesor_id });
+        }
+
+        try {
+            await Curso.update(id, { nombre, descripcion, profesor: { id: Number(profesor_id) } });
+            res.redirect('/cursos/listar');
         } catch (err) {
             if (err instanceof Error) {
                 res.status(500).send(err.message);
@@ -117,9 +145,18 @@ class CursosController {
         }
     }
     
-    
 
-    
+    async eliminar(req: Request, res: Response) {
+        const { id } = req.params;
+        try {
+            await Curso.delete({ id: Number(id) });
+            res.redirect('/cursos/listar');
+        } catch (err) {
+            if (err instanceof Error) {
+                res.status(500).send(err.message);
+            }
+        }
+    }
 }
 
 export default new CursosController();

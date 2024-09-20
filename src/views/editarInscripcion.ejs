@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Modificar Inscripción</title>
+    <link rel="stylesheet" href="/css/estilo.css">
+    <link rel="stylesheet" href="/css/insertar.css">
+</head>
+
+<body>
+    <header>
+        <nav>
+            <a href="/">Proyecto universidad</a>
+            <div>
+                <a href="/estudiantes/listar">Listar estudiantes</a>
+                <a href="/profesores/listar">Listar profesores</a>
+                <a href="/cursos/listar">Listar cursos</a>
+                <a href="/inscripciones/listar">Listar inscripciones</a>
+            </div>
+        </nav>
+    </header>
+
+    <div id="content">
+        <h1>Modificar Inscripción</h1>
+    </div>
+
+    <% if (typeof errores !== 'undefined' && Object.keys(errores).length > 0) { %>
+        <div class="error-msg">
+            <ul>
+                <% Object.values(errores).forEach(function(error) { %>
+                    <li><%= error %></li>
+                <% }); %>
+            </ul>
+        </div>
+    <% } %>
+
+    <form action="/inscripciones/modificar/<%= inscripcion.curso_id %>/<%= inscripcion.estudiante_id %>?_method=PUT" method="POST">
+        <input type="hidden" name="_method" value="PUT">
+        <label for="curso_id">Curso (ID):</label>
+        <input type="text" name="nuevo_curso_id" value="<%= inscripcion.curso_id %>">
+    
+        <label for="estudiante_id">Estudiante (ID):</label>
+        <input type="text" name="nuevo_estudiante_id" value="<%= inscripcion.estudiante_id %>">
+    
+        <label for="nota">Nota:</label>
+        <input type="text" name="nota" value="<%= inscripcion.nota %>">
+    
+        <button type="submit">Modificar Inscripcion</button>
+    </form>
+    
+</body>
+
+</html>
+

@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Modificar Profesor</title>
+    <link rel="stylesheet" href="/css/insertar.css">
+    <link rel="stylesheet" href="/css/estilo.css">
+</head>
+
+<body>
+    <header>
+        <nav>
+            <a href="/">Proyecto universidad</a>
+            <div>
+                <a href="/estudiantes/listar">Listar estudiantes</a>
+                <a href="/profesores/listar">Listar profesores</a>
+                <a href="/cursos/listar">Listar cursos</a>
+                <a href="/inscripciones/listar">Listar inscripciones</a>
+            </div>
+        </nav>
+    </header>
+
+    <div id="agregar-container">
+        <a id="agregar" href="/profesores/insertar">Agregar Profesor</a>
+    </div>
+    <div id="content">
+        <h1>Modificar Profesor</h1>
+    </div>
+
+    <% if (typeof errores !== 'undefined' && Object.keys(errores).length > 0) { %>
+        <div class="error-msg">
+            <ul>
+                <% Object.values(errores).forEach(function(error) { %>
+                    <li><%= error %></li>
+                <% }); %>
+            </ul>
+        </div>
+    <% } %>
+
+    <form method="POST" action="/profesores/modificar?_method=PUT">
+        <input type="hidden" name="id" value="<%= profesor.id %>">
+
+        <label for="dni">DNI:</label>
+        <input type="text" id="dni" name="dni" placeholder="DNI" value="<%= profesor.dni %>">
+
+        <label for="nombre">Nombre:</label>
+        <input type="text" id="nombre" name="nombre" placeholder="Nombre" value="<%= profesor.nombre %>">
+
+        <label for="apellido">Apellido:</label>
+        <input type="text" id="apellido" name="apellido" placeholder="Apellido" value="<%= profesor.apellido %>">
+
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email" placeholder="Email" value="<%= profesor.email %>">
+
+        <label for="profesion">Profesión:</label>
+        <input type="text" id="profesion" name="profesion" placeholder="Profesión" value="<%= profesor.profesion %>">
+
+        <label for="telefono">Teléfono:</label>
+        <input type="text" id="telefono" name="telefono" placeholder="Teléfono" value="<%= profesor.telefono %>">
+
+        <button type="submit">Modificar Profesor</button>
+    </form>
+</body>
+
+</html>

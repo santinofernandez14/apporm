@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Insertar Inscripción</title>
+    <link rel="stylesheet" href="/css/estilo.css">
+    <link rel="stylesheet" href="/css/insertar.css">
+</head>
+
+<body>
+    <header>
+        <nav>
+            <a href="/">Proyecto universidad</a>
+            <div>
+                <a href="/estudiantes/listar">Listar estudiantes</a>
+                <a href="/profesores/listar">Listar profesores</a>
+                <a href="/cursos/listar">Listar cursos</a>
+                <a href="/inscripciones/listar">Listar inscripciones</a>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Enlace Agregar Estudiante, fuera del header -->
+    <div id="agregar-container">
+        <a id="agregar" href="/inscripciones/insertar">Agregar Inscirpcion</a>
+    </div>
+    <div id="content">
+        <h1>Insertar Inscripcion</h1>
+    </div>
+
+    <% if (typeof errores !== 'undefined' && Object.keys(errores).length > 0) { %>
+        <div class="error-msg">
+            <ul>
+                <% Object.values(errores).forEach(function(error) { %>
+                    <li><%= error %></li>
+                <% }); %>
+            </ul>
+        </div>
+    <% } %>
+
+    <form action="/inscripciones/insertar" method="POST">
+        <label for="curso_id">ID Curso:</label>
+        <input type="text" name="curso_id" value="<%= typeof curso_id !== 'undefined' ? curso_id : '' %>">
+
+        <label for="estudiante_id">ID Estudiante:</label>
+        <input type="text" name="estudiante_id" value="<%= typeof estudiante_id !== 'undefined' ? estudiante_id : '' %>">
+
+        <label for="nota">Nota:</label>
+        <input type="text" name="nota" value="<%= typeof nota !== 'undefined' ? nota : '' %>">
+
+        <button type="submit">Insertar Inscripcion</button>
+    </form>
+</body>
+
+</html>

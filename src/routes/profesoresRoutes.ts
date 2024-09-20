@@ -1,33 +1,26 @@
-import  express  from "express";
+import express from 'express';
+import profesoresController from '../controllers/profesoresController';
 
-const router=express.Router();
-import profesorController from "../controllers/profesoresController"
-router.get('/',profesorController.consultar);
-router.post('/',profesorController.insertar);
-router.put('/',profesorController.modificar);
-router.delete('/',profesorController.borrar)
+const router = express.Router();
 
-router.route('/:id')
-.put(profesorController.modificar)
-.delete(profesorController.borrar)
-.get(profesorController.consultarUno)
-
-router.get('/', (req,res)=>{
-    res.send('Consultando profesor');
+// Ruta para mostrar el formulario de insertar
+router.get('/insertar', (req, res) => {
+    res.render('insertarProfesor');
 });
 
-router.post('/', (req,res)=>{
-    res.send('Agregando profesor');
-});
+// Ruta para insertar
+router.post('/insertar', profesoresController.insertar);
 
+// Ruta para listar todos los profesores
+router.get('/listar', profesoresController.listar);
 
-router.put('/', (req,res)=>{
-    res.send('Modificando profesor');
-});
+// Ruta para mostrar el formulario de editar
+router.get('/editar/:id', profesoresController.editar);
 
+// Ruta para modificar un profesor
+router.put('/modificar', profesoresController.modificar);
 
-router.delete('/', (req,res)=>{
-    res.send('Borrando profesor');
-});
+// Ruta para eliminar un profesor
+router.get('/eliminar/:id', profesoresController.eliminar);
 
 export default router;

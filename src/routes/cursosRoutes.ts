@@ -1,39 +1,32 @@
+import express from 'express';
+import cursosController from '../controllers/cursosController';
+import methodOverride from 'method-override';
 
+const router = express.Router();
 
+// Configura method-override para usar _method en formularios HTML
+router.use(methodOverride('_method'));
 
-import  express  from "express";
+// Ruta para listar los cursos
+router.get('/listar', cursosController.listar);
 
-const router=express.Router();
-import  cursoController from "../controllers/cursosController";
-
-router.get('/',cursoController.consultar);
-router.post('/',cursoController.insertar);
-router.put('/',cursoController.modificar);
-router.delete('/',cursoController.borrar)
-
-
-router.route('/:id')
-.put(cursoController.modificar)
-.delete(cursoController.borrar)
-.get(cursoController.consultarUno)
-
-router.get('/', (req,res)=>{
-    res.send('Consultando curso');
+// Ruta para mostrar el formulario de insertar
+router.get('/insertar', (req, res) => {
+    res.render('insertarCurso'); // Renderiza la vista de insertar curso
 });
 
-router.post('/', (req,res)=>{
-    res.send('Agregando curso');
-});
+// Ruta para insertar curso
+router.post('/insertar', cursosController.insertar);
 
+// Ruta para editar curso
+router.get('/editar/:id', cursosController.editar);
 
-router.put('/', (req,res)=>{
-    res.send('Modificando curso');
-});
+// Ruta para procesar la edición del curso (PUT)
+router.put('/editar/:id', cursosController.modificar);
 
+// Ruta para eliminar curso (DELETE)
+router.get('/eliminar/:id', cursosController.eliminar);
 
-router.delete('/', (req,res)=>{
-    res.send('Borrando curso');
-});
 
 
 export default router;

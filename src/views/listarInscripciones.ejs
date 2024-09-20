@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Listar Inscripciones</title>
+    <link rel="stylesheet" href="/css/estilo.css">
+    <link rel="stylesheet" href="/css/insertar.css">
+</head>
+
+<body>
+    <header>
+        <nav>
+            <a href="/">Proyecto universidad</a>
+            <div>
+                <a href="/estudiantes/listar">Listar estudiantes</a>
+                <a href="/profesores/listar">Listar profesores</a>
+                <a href="/cursos/listar">Listar cursos</a>
+                <a href="/inscripciones/listar">Listar inscripciones</a>
+            </div>
+        </nav>
+    </header>
+
+    <div id="agregar-container">
+        <a id="agregar" href="/inscripciones/insertar">Agregar Inscripción</a>
+    </div>
+
+    <div id="content">
+        <h1>Proyecto universidad</h1>
+        <h3>Lista de Inscripciones</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>Curso_id</th>
+                    <th>Estudiante_id</th>
+                    <th>Nota</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% inscripciones.forEach(inscripcion => { %>
+                    <tr>
+                        <td><%= inscripcion.curso_id %></td>
+                        <td><%= inscripcion.estudiante_id %></td>
+                        <td><%= inscripcion.nota %></td>
+                        <td>
+                            <a id="editar" href="/inscripciones/editar/<%= inscripcion.curso_id %>/<%= inscripcion.estudiante_id %>">Editar</a>
+                            <a id="eliminar" href="#"
+                                onclick="if (confirm('¿Está seguro de que desea eliminar esta inscripción?')) { document.getElementById('delete-form-<%= inscripcion.curso_id %>-<%= inscripcion.estudiante_id %>').submit(); } return false;">
+                                Eliminar
+                            </a>
+                            <form id="delete-form-<%= inscripcion.curso_id %>-<%= inscripcion.estudiante_id %>" action="/inscripciones/eliminar/<%= inscripcion.curso_id %>/<%= inscripcion.estudiante_id %>" method="POST" style="display:none;">
+                                <input type="hidden" name="_method" value="DELETE">
+                            </form>
+                        </td>
+                    </tr>
+                <% }) %>
+            </tbody>
+        </table>
+    </div>
+</body>
+
+</html>
+
+
+

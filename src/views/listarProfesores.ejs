@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Listar Profesores</title>
+    <link rel="stylesheet" href="/css/estilo.css">
+    <link rel="stylesheet" href="/css/insertar.css">
+</head>
+
+<body>
+    <header>
+        <nav>
+            <a href="/">Proyecto universidad</a>
+            <div>
+                <a href="/estudiantes/listar">Listar estudiantes</a>
+                <a href="/profesores/listar">Listar profesores</a>
+                <a href="/cursos/listar">Listar cursos</a>
+                <a href="/inscripciones/listar">Listar inscripciones</a>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Enlace Agregar Estudiante, fuera del header -->
+    <div id="agregar-container">
+        <a id="agregar" href="/profesores/insertar">Agregar Profesor</a>
+    </div>
+
+    <div id="content">
+        <h1>Proyecto universidad</h1>
+        <h3>Lista de profesores</h3>
+
+        <table border="1">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>DNI</th>
+                    <th>Nombre</th>
+                    <th>Apellido</th>
+                    <th>Email</th>
+                    <th>Profesión</th>
+                    <th>Teléfono</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% profesores.forEach(profesor=> { %>
+                    <tr>
+                        <td>
+                            <%= profesor.id %>
+
+                        </td>
+                        <td>
+                            <%= profesor.dni %>
+                        </td>
+                        <td>
+                            <%= profesor.nombre %>
+                        </td>
+                        <td>
+                            <%= profesor.apellido %>
+                        </td>
+                        <td>
+                            <%= profesor.email %>
+                        </td>
+                        <td>
+                            <%= profesor.profesion %>
+                        </td>
+                        <td>
+                            <%= profesor.telefono %>
+                        </td>
+                        <td>
+                            <a id="editar" href="/profesores/editar/<%= profesor.id %>">Editar</a>
+                            <a id="eliminar" href="/profesores/eliminar/<%= profesor.id %>"
+                                onclick="return confirm('¿Está seguro de que desea eliminar este profesor?')">Eliminar</a>
+                        </td>
+                    </tr>
+                    <% }) %>
+            </tbody>
+        </table>
+</body>
+
+</html>
