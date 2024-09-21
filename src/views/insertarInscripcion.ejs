@@ -43,13 +43,13 @@
 
     <form action="/inscripciones/insertar" method="POST">
         <label for="curso_id">ID Curso:</label>
-        <input type="text" name="curso_id" value="<%= typeof curso_id !== 'undefined' ? curso_id : '' %>">
+        <input type="text" name="curso_id" value="<%= typeof curso_id !== 'undefined' ? curso_id : '' %>" placeholder="id_curso">
 
         <label for="estudiante_id">ID Estudiante:</label>
-        <input type="text" name="estudiante_id" value="<%= typeof estudiante_id !== 'undefined' ? estudiante_id : '' %>">
+        <input type="text" name="estudiante_id" value="<%= typeof estudiante_id !== 'undefined' ? estudiante_id : '' %>" placeholder="Id_estudiante">
 
         <label for="nota">Nota:</label>
-        <input type="text" name="nota" value="<%= typeof nota !== 'undefined' ? nota : '' %>">
+        <input type="text" name="nota" value="<%= typeof nota !== 'undefined' ? nota : '' %>" placeholder="Nota">
 
         <button type="submit">Insertar Inscripcion</button>
     </form>

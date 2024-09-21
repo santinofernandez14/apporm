@@ -43,13 +43,13 @@
 
     <form action="/cursos/editar/<%= curso.id %>?_method=PUT" method="POST">
         <label for="nombre">Nombre:</label>
-        <input type="text" name="nombre" value="<%= curso.nombre %>">
+        <input type="text" name="nombre" value="<%= curso.nombre %>" placeholder="Nombre">
     
         <label for="descripcion">Descripción:</label>
-        <input type="text" name="descripcion" value="<%= curso.descripcion %>">
+        <input type="text" name="descripcion" value="<%= curso.descripcion %>" placeholder="Descripcion">
     
         <label for="profesor_id">Profesor (ID):</label>
-        <input type="text" name="profesor_id" value="<%= typeof profesorId !== 'undefined' ? profesorId : (curso.profesor ? curso.profesor.id : '') %>">
+        <input type="text" name="profesor_id" value="<%= typeof profesorId !== 'undefined' ? profesorId : (curso.profesor ? curso.profesor.id : '') %>" placeholder="Profesor_id">
         
         <button type="submit">Modificar Curso</button>
     </form>

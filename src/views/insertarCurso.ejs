@@ -43,13 +43,13 @@
         <% } %>
             <form action="/cursos/insertar" method="POST">
                 <label for="nombre">Nombre:</label>
-                <input type="text" name="nombre" value="<%= typeof nombre !== 'undefined' ? nombre : '' %>">
+                <input type="text" name="nombre" value="<%= typeof nombre !== 'undefined' ? nombre : '' %>" placeholder="Nombre">
 
                 <label for="descripcion">Descripción:</label>
-                <input type="text" name="descripcion" value="<%= typeof descripcion !== 'undefined' ? descripcion : '' %>">
+                <input type="text" name="descripcion" value="<%= typeof descripcion !== 'undefined' ? descripcion : '' %>" placeholder="Descripcion">
 
                 <label for="profesor_id">Profesor (ID):</label>
-                <input type="text" name="profesor_id" value="<%= typeof profesor_id !== 'undefined' ? profesor_id : '' %>">
+                <input type="text" name="profesor_id" value="<%= typeof profesor_id !== 'undefined' ? profesor_id : '' %>" placeholder="Profesor_id">
 
                 <button type="submit">Insertar</button>
             </form>

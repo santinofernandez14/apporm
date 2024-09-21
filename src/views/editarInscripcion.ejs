@@ -40,13 +40,13 @@
     <form action="/inscripciones/modificar/<%= inscripcion.curso_id %>/<%= inscripcion.estudiante_id %>?_method=PUT" method="POST">
         <input type="hidden" name="_method" value="PUT">
         <label for="curso_id">Curso (ID):</label>
-        <input type="text" name="nuevo_curso_id" value="<%= inscripcion.curso_id %>">
+        <input type="text" name="nuevo_curso_id" value="<%= inscripcion.curso_id %>" placeholder="Id_curso">
     
         <label for="estudiante_id">Estudiante (ID):</label>
-        <input type="text" name="nuevo_estudiante_id" value="<%= inscripcion.estudiante_id %>">
+        <input type="text" name="nuevo_estudiante_id" value="<%= inscripcion.estudiante_id %>" placeholder="Id_estudiante">
     
         <label for="nota">Nota:</label>
-        <input type="text" name="nota" value="<%= inscripcion.nota %>">
+        <input type="text" name="nota" value="<%= inscripcion.nota %>" placeholder="Nota">
     
         <button type="submit">Modificar Inscripcion</button>
     </form>
